@@ -20,7 +20,7 @@ namespace BooksCommand.Persistence
             _publisher = publisher;
         }
 
-        public async Task<BookWriteDataModel?> FindBookById(int bookId)
+        public async Task<BookWriteDataModel?> FindBookById(Guid bookId)
         {
             return await _dbContext.Books.Where(book => book.Id == bookId).FirstOrDefaultAsync();
         }
@@ -50,7 +50,7 @@ namespace BooksCommand.Persistence
                 CreatedDate = DateTime.UtcNow 
             };
 
-            aggregateRoot.RaiseBookCreatedEvent(createdBookEvent);
+            //aggregateRoot.RaiseBookCreatedEvent(createdBookEvent);
 
             await _publisher.Publish(createdBookEvent, cancellationToken);
 
@@ -59,11 +59,11 @@ namespace BooksCommand.Persistence
 
         public async Task<BookWriteDataModel> ReserveBook(BookWriteDataModel bookDm, CancellationToken cancellationToken)
         {
-            BookId bookId = new(bookDm.Id);
-            BookTitle bookTitle = new(bookDm.Title);
-            BookIsReserved bookIsReserved = new();
+            //BookId bookId = new(bookDm.Id);
+            //BookTitle bookTitle = new(bookDm.Title);
+            //BookIsReserved bookIsReserved = new();
 
-            Book book = new(bookId, bookTitle, bookIsReserved);
+            //Book book = new(bookId, bookTitle, bookIsReserved);
             
             BookOutBoxDataModel bookOutBoxDataModel = new()
             {
@@ -84,7 +84,7 @@ namespace BooksCommand.Persistence
                 IsReserved = true,
                 CreatedDate= DateTime.UtcNow
             };
-            book.RaiseBookCreatedEvent(bookReservedEvent);
+            //book.RaiseBookCreatedEvent(bookReservedEvent);
 
             await _publisher.Publish(bookReservedEvent, cancellationToken);
 

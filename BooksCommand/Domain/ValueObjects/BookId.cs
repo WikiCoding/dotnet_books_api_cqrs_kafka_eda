@@ -2,11 +2,10 @@
 {
     public class BookId
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
-        public BookId(int id)
+        public BookId(Guid id)
         {
-            if (id < 0) throw new ArgumentException("invalid id value");
             Id = id;
         }
     }

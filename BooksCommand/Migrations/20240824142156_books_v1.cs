@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BooksCommand.Migrations
 {
     /// <inheritdoc />
-    public partial class books_write_v1 : Migration
+    public partial class books_v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,7 @@ namespace BooksCommand.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     IsReserved = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -32,6 +31,7 @@ namespace BooksCommand.Migrations
                 {
                     StreamId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BookId = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     IsReserved = table.Column<bool>(type: "boolean", nullable: false),
                     IsCreationEvent = table.Column<bool>(type: "boolean", nullable: false),

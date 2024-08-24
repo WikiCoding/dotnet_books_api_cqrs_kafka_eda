@@ -7,5 +7,7 @@ namespace BooksCommand.Database
     {
         public DbSet<BookWriteDataModel> Books { get; set; }
         public DbSet<BookOutBoxDataModel> OutBoxModels { get; set; }
+
+
     }
 }

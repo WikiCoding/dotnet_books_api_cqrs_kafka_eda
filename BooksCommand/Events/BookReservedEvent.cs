@@ -2,7 +2,7 @@
 {
     public class BookReservedEvent : IDomainEvent
     {
-        public int BookId { get; set; }
+        public Guid BookId { get; set; }
         public string Title { get; set; } = string.Empty;
         public bool IsReserved { get; set; } = true;
         public bool IsUpdateEvent { get; set; } = true;

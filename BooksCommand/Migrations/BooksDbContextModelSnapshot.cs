@@ -30,6 +30,9 @@ namespace BooksCommand.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StreamId"));
 
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -53,11 +56,9 @@ namespace BooksCommand.Migrations
 
             modelBuilder.Entity("BooksCommand.Persistence.BookWriteDataModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsReserved")
                         .HasColumnType("boolean");

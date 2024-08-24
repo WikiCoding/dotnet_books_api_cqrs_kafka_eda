@@ -6,8 +6,8 @@ namespace BooksCommand.Domain
 {
     public class Book : IAggregateRoot
     {
-        private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyList<IDomainEvent> DomainEvents => _events.AsReadOnly();
+        //private readonly List<IDomainEvent> _events = [];
+        //public IReadOnlyList<IDomainEvent> DomainEvents => _events.AsReadOnly();
 
         public BookId Id { get; set; }
         public BookTitle Title { get; set; }
@@ -20,14 +20,14 @@ namespace BooksCommand.Domain
             IsReserved = isReserved;
         }
 
-        public void RaiseBookCreatedEvent(IDomainEvent domainEvent)
-        {
-            _events.Add(domainEvent);
-        }
+        //public void RaiseBookCreatedEvent(IDomainEvent domainEvent)
+        //{
+        //    _events.Add(domainEvent);
+        //}
 
-        public void RaiseClearEvents()
-        {
-            _events.Clear();
-        }
+        //public void RaiseClearEvents()
+        //{
+        //    _events.Clear();
+        //}
     }
 }

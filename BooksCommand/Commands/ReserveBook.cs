@@ -8,7 +8,7 @@ namespace BooksCommand.Commands
     {
         public class ReserveBookCommand : IRequest<BookWriteDataModel>
         {
-            public int BookId { get; init; }
+            public Guid BookId { get; init; }
         }
 
         public class ReverveBookHanlder : IRequestHandler<ReserveBookCommand, BookWriteDataModel>

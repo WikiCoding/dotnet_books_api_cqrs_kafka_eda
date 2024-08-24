@@ -41,7 +41,7 @@ namespace BooksCommand.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> ReserveBook([FromRoute(Name = "id")] int id)
+        public async Task<IActionResult> ReserveBook([FromRoute(Name = "id")] Guid id)
         {
             var reserveBookCommand = new ReserveBook.ReserveBookCommand() { BookId = id };
             var bookDm = await _mediator.Send(reserveBookCommand);

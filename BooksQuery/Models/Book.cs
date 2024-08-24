@@ -11,5 +11,7 @@ namespace BooksQuery.Models
         public string Title { get; set; } = string.Empty;
         [BsonElement("reserved")]
         public bool IsReserved { get; set; } = false;
+        [BsonElement("event_id")]
+        public string EventId { get; set; } = string.Empty;
     }
 }

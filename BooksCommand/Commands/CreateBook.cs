@@ -29,7 +29,7 @@ namespace BooksCommand.Commands
             public async Task<BookWriteDataModel> Handle(CreateBookCommand request, CancellationToken cancellationToken)
             {
                 // create book aggregate
-                BookId bookId = new(0);
+                BookId bookId = new(Guid.NewGuid());
                 BookTitle bookTitle = new(request.Title);
                 BookIsReserved bookIsReserved = new();
                 Book book = new(bookId, bookTitle, bookIsReserved);

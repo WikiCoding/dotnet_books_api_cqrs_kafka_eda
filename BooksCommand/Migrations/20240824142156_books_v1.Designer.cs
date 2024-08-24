@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BooksCommand.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    [Migration("20240823095835_books_write_v1")]
-    partial class books_write_v1
+    [Migration("20240824142156_books_v1")]
+    partial class books_v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace BooksCommand.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StreamId"));
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -56,11 +59,9 @@ namespace BooksCommand.Migrations
 
             modelBuilder.Entity("BooksCommand.Persistence.BookWriteDataModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsReserved")
                         .HasColumnType("boolean");

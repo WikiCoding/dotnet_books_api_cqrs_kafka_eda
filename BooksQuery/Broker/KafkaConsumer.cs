@@ -2,6 +2,7 @@
 using BooksQuery.Database;
 using BooksQuery.Models;
 using Confluent.Kafka;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace BooksQuery.Broker
@@ -12,8 +13,9 @@ namespace BooksQuery.Broker
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
         private const string TOPIC = "create_book";
+        private readonly ILogger<KafkaConsumer> _logger;
 
-        public KafkaConsumer(IConfiguration configuration, IServiceProvider serviceProvider)
+        public KafkaConsumer(IConfiguration configuration, IServiceProvider serviceProvider, ILogger<KafkaConsumer> logger)
         {
             _configuration = configuration;
             _serviceProvider = serviceProvider;
@@ -26,6 +28,7 @@ namespace BooksQuery.Broker
             };
 
             _consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -50,19 +53,34 @@ namespace BooksQuery.Broker
 
             var message = consumeResult.Message.Value;
 
-            Console.WriteLine($"Received message {message}");
+            _logger.LogWarning("Received message {message}", message);
 
             BookReadDataModel bookReadDataModel = JsonSerializer.Deserialize<BookReadDataModel>(message)!;
 
-            Book book = new() { Title = bookReadDataModel.Title, IsReserved = bookReadDataModel.IsReserved };
+            Book book = new() { Title = bookReadDataModel.Title, IsReserved = bookReadDataModel.IsReserved, EventId = bookReadDataModel.BookId };
 
             using (var scope = _serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<BookReadDbContext>();
 
-                dbContext!.Add(book);
+                if (bookReadDataModel.IsCreationEvent)
+                {
+                    dbContext!.Add(book);
+                    await dbContext.SaveChangesAsync(stoppingToken);
+                }
+                else
+                {
+                    var bookToUpdate = await dbContext!.Books.Where(book => book.EventId == bookReadDataModel.BookId).FirstOrDefaultAsync();
 
-                await dbContext.SaveChangesAsync(stoppingToken);
+                    _logger.LogWarning("Book to Update: {bookToUpdate.EventId}", bookToUpdate.EventId);
+                    _logger.LogWarning("Book to Update: {bookToUpdate.EventId}", bookReadDataModel.BookId);
+
+                    bookToUpdate!.IsReserved = true;
+
+                    int rowsAffected = await dbContext.SaveChangesAsync(stoppingToken);
+
+                    _logger.LogWarning("rows affected {rowsAffected}", rowsAffected );
+                }
             }
         }
     }
