@@ -7,7 +7,7 @@ namespace BooksCommand.Domain
     public class Book : IAggregateRoot
     {
         private readonly List<IDomainEvent> _events = [];
-        public IReadOnlyCollection<IDomainEvent> DomainEvents => _events.AsReadOnly();
+        public IReadOnlyList<IDomainEvent> DomainEvents => _events.AsReadOnly();
 
         public BookId Id { get; set; }
         public BookTitle Title { get; set; }

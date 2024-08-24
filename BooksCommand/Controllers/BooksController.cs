@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BooksCommand.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static BooksCommand.Commands.CreateBook;
@@ -37,6 +38,15 @@ namespace BooksCommand.Controllers
             {
                 return Problem(ex.Message);
             }
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> ReserveBook([FromRoute(Name = "id")] int id)
+        {
+            var reserveBookCommand = new ReserveBook.ReserveBookCommand() { BookId = id };
+            var bookDm = await _mediator.Send(reserveBookCommand);
+
+            return Ok(bookDm);
         }
 
     }

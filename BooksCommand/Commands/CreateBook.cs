@@ -20,15 +20,10 @@ namespace BooksCommand.Commands
         public class CreateBookHandler : IRequestHandler<CreateBookCommand, BookWriteDataModel>
         {
             private readonly IBookRepository _bookRepository;
-            private readonly KafkaProducer _kafkaProducer;
-            private const string TOPIC = "create_book";
-            private readonly IConfiguration _configuration;
 
-            public CreateBookHandler(IBookRepository bookRepository, IConfiguration configuration, KafkaProducer kafkaProducer)
+            public CreateBookHandler(IBookRepository bookRepository)
             {
                 _bookRepository = bookRepository;
-                _configuration = configuration;
-                _kafkaProducer = kafkaProducer;
             }
 
             public async Task<BookWriteDataModel> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -39,21 +34,8 @@ namespace BooksCommand.Commands
                 BookIsReserved bookIsReserved = new();
                 Book book = new(bookId, bookTitle, bookIsReserved);
 
-                // save book and receive book data model
                 BookWriteDataModel bookDm = await _bookRepository.SaveBook(book, cancellationToken);
 
-                // raise event
-                book.RaiseBookCreatedEvent(new CreatedBookEvent() { BookId = bookDm.Id, Title = bookDm.Title, IsReserved = bookDm.IsReserved, CreatedDate = DateTime.Now });
-
-                // maybe dispatch message here (for now)
-                string bookSerialized = JsonSerializer.Serialize(bookDm);
-                Console.WriteLine(bookSerialized);
-                //KafkaProducer kafkaProducer = new(_configuration);
-                string ack = await _kafkaProducer.ProduceAsync(TOPIC, bookSerialized);
-
-                //Console.WriteLine("received ack: {ack}", ack);
-
-                // return datamodel
                 return bookDm;
             }
         }

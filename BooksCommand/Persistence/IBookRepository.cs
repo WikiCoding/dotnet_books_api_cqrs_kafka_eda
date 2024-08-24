@@ -7,5 +7,7 @@ namespace BookApi.Command.Persistence
 {
     public interface IBookRepository : IRepository<Book, BookWriteDataModel>
     {
+        Task<BookWriteDataModel?> FindBookById(int bookId);
+        Task<BookWriteDataModel> ReserveBook(BookWriteDataModel bookDm, CancellationToken cancellationToken);
     }
 }

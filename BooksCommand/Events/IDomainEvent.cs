@@ -1,6 +1,8 @@
-﻿namespace BooksCommand.Events
+﻿using MediatR;
+
+namespace BooksCommand.Events
 {
-    public interface IDomainEvent
+    public interface IDomainEvent : INotification
     {
     }
 }
