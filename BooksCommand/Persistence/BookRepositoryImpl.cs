@@ -27,34 +27,27 @@ namespace BooksCommand.Persistence
 
         public async Task<BookWriteDataModel> SaveBook(Book aggregateRoot, CancellationToken cancellationToken)
         {
-            BookWriteDataModel bookWriteDataModel = new() { Title = aggregateRoot.Title.Title, IsReserved = false };
+            BookWriteDataModel writeDm = new() { Title = aggregateRoot.Title.Title, IsReserved = false };
 
-            BookOutBoxDataModel bookOutBoxDataModel = new() 
+            BookOutBoxDataModel outboxDm = new() 
             { 
-                Title = bookWriteDataModel.Title, 
-                IsReserved = bookWriteDataModel.IsReserved, 
+                Title = writeDm.Title, 
+                IsReserved = writeDm.IsReserved, 
                 IsCreationEvent = true,
                 CreatedDate = DateTime.UtcNow
             };
 
-            _dbContext.Add(bookWriteDataModel);
-            _dbContext.Add(bookOutBoxDataModel);
+            _dbContext.Add(writeDm);
+            _dbContext.Add(outboxDm);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            CreatedBookEvent createdBookEvent = new() 
-            { 
-                BookId = bookWriteDataModel.Id, 
-                Title = bookWriteDataModel.Title, 
-                IsReserved = bookWriteDataModel.IsReserved, 
-                CreatedDate = DateTime.UtcNow 
-            };
+            BookCreatedEvent createdBookEvent = new(writeDm.Id, writeDm.Title, writeDm.IsReserved, outboxDm.IsCreationEvent, DateTime.UtcNow);
 
-            //aggregateRoot.RaiseBookCreatedEvent(createdBookEvent);
+            // I'll use the outbox pattern so no need to create this coupling here
+            //await _publisher.Publish(createdBookEvent, cancellationToken);
 
-            await _publisher.Publish(createdBookEvent, cancellationToken);
-
-            return bookWriteDataModel;
+            return writeDm;
         }
 
         public async Task<BookWriteDataModel> ReserveBook(BookWriteDataModel bookDm, CancellationToken cancellationToken)
@@ -65,7 +58,7 @@ namespace BooksCommand.Persistence
 
             //Book book = new(bookId, bookTitle, bookIsReserved);
             
-            BookOutBoxDataModel bookOutBoxDataModel = new()
+            BookOutBoxDataModel outboxDm = new()
             {
                 Title = bookDm.Title,
                 IsReserved = true,
@@ -73,20 +66,16 @@ namespace BooksCommand.Persistence
                 CreatedDate = DateTime.UtcNow
             };
 
-            _dbContext.Add(bookOutBoxDataModel);
+            _dbContext.Add(outboxDm);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            BookReservedEvent bookReservedEvent = new()
-            {
-                BookId = bookDm.Id,
-                Title= bookDm.Title,
-                IsReserved = true,
-                CreatedDate= DateTime.UtcNow
-            };
+            BookReservedEvent bookReservedEvent = new(bookDm.Id, bookDm.Title, outboxDm.IsReserved, outboxDm.IsCreationEvent, outboxDm.CreatedDate);
+
             //book.RaiseBookCreatedEvent(bookReservedEvent);
 
-            await _publisher.Publish(bookReservedEvent, cancellationToken);
+            // I'll use the outbox pattern so no need to create this coupling here
+            //await _publisher.Publish(bookReservedEvent, cancellationToken);
 
             return bookDm;
         }

@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace BooksCommand.Events.EventHandlers
 {
-    public class BookCreatedEventHandler : INotificationHandler<CreatedBookEvent>
+    public class BookCreatedEventHandler : INotificationHandler<BookCreatedEvent>
     {
         private readonly KafkaProducer _kafkaProducer;
         private const string TOPIC = "create_book";
@@ -18,7 +18,7 @@ namespace BooksCommand.Events.EventHandlers
             _dbContext = booksDbContext;
         }
 
-        public async Task Handle(CreatedBookEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
         {
             BookOutBoxDataModel bookOutbox = new()
             {

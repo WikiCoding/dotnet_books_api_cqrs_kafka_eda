@@ -1,15 +1,19 @@
 using BookApi.Command.Persistence;
 using BooksCommand.Broker;
 using BooksCommand.Database;
+using BooksCommand.Domain;
+using BooksCommand.Outbox;
 using BooksCommand.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IBookFactory, BookFactory>();
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddScoped<IBookRepository, BookRepositoryImpl>();
 builder.Services.AddSingleton<KafkaProducer>();
+builder.Services.AddHostedService<OutbooxPublisher>();
 
 builder.Services.AddDbContext<BooksDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("books-write")));
 

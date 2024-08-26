@@ -4,7 +4,8 @@ namespace BooksCommand.Domain.DDD
 {
     public interface IAggregateRoot
     {
-        //void RaiseBookCreatedEvent(IDomainEvent domainEvent);
-        //void RaiseClearEvents();
+        void RaiseBookCreatedEvent(BookCreatedEvent domainEvent);
+        void RaiseBookReservedEvent(BookReservedEvent domainEvent);
+        void RaiseClearEvents();
     }
 }

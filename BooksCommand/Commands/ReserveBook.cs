@@ -22,6 +22,7 @@ namespace BooksCommand.Commands
 
             public async Task<BookWriteDataModel> Handle(ReserveBookCommand request, CancellationToken cancellationToken) 
             {
+                // here I should build the aggregate root, raise the proper domain event and then continue the logic as at CreateBook
                 BookWriteDataModel? bookDm = await _bookRepository.FindBookById(request.BookId);
 
                 if (bookDm == null) { throw new Exception("book not found"); }

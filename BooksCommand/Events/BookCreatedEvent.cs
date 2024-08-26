@@ -1,20 +1,21 @@
 ﻿namespace BooksCommand.Events
 {
-    public class BookReservedEvent : IDomainEvent
+    public class BookCreatedEvent : IDomainEvent
     {
+        //public int StreamId { get; set; }
         public Guid BookId { get; }
         public string Title { get; } = string.Empty;
-        public bool IsReserved { get; } = true;
-        public bool IsUpdateEvent { get; } = true;
+        public bool IsReserved { get; } = false;
+        public bool IsCreationEvent { get; } = true;
         public DateTime CreatedDate { get; }
         public DateTime? ProcessedDate { get; set; }
 
-        public BookReservedEvent(Guid bookId, string title, bool isReserved, bool isUpdateEvent, DateTime createdDate)
+        public BookCreatedEvent(Guid bookId, string title, bool isReserved, bool isCreationEvent, DateTime createdDate)
         {
             BookId = bookId;
             Title = title;
             IsReserved = isReserved;
-            IsUpdateEvent = isUpdateEvent;
+            IsCreationEvent = isCreationEvent;
             CreatedDate = createdDate;
         }
     }

@@ -14,16 +14,18 @@ namespace BooksCommand.Commands
     {
         public class CreateBookCommand : IRequest<BookWriteDataModel>
         {
-            public string Title { get; set; } = string.Empty;
+            public string Title { get; init; } = string.Empty;
         }
 
         public class CreateBookHandler : IRequestHandler<CreateBookCommand, BookWriteDataModel>
         {
             private readonly IBookRepository _bookRepository;
+            private readonly IBookFactory _bookFactory;
 
-            public CreateBookHandler(IBookRepository bookRepository)
+            public CreateBookHandler(IBookRepository bookRepository, IBookFactory bookFactory)
             {
                 _bookRepository = bookRepository;
+                _bookFactory = bookFactory;
             }
 
             public async Task<BookWriteDataModel> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -32,9 +34,11 @@ namespace BooksCommand.Commands
                 BookId bookId = new(Guid.NewGuid());
                 BookTitle bookTitle = new(request.Title);
                 BookIsReserved bookIsReserved = new();
-                Book book = new(bookId, bookTitle, bookIsReserved);
+                Book book = _bookFactory.Create(bookId, bookTitle, bookIsReserved);
 
                 BookWriteDataModel bookDm = await _bookRepository.SaveBook(book, cancellationToken);
+
+                book.RaiseClearEvents();
 
                 return bookDm;
             }
