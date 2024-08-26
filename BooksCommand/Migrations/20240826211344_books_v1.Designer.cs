@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BooksCommand.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    [Migration("20240824142156_books_v1")]
+    [Migration("20240826211344_books_v1")]
     partial class books_v1
     {
         /// <inheritdoc />
@@ -39,8 +39,8 @@ namespace BooksCommand.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsCreationEvent")
-                        .HasColumnType("boolean");
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsReserved")
                         .HasColumnType("boolean");

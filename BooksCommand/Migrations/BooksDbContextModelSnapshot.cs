@@ -36,8 +36,8 @@ namespace BooksCommand.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsCreationEvent")
-                        .HasColumnType("boolean");
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsReserved")
                         .HasColumnType("boolean");

@@ -27,7 +27,7 @@ namespace BooksCommand.Events.EventHandlers
                 Title = notification.Title, 
                 IsReserved = notification.IsReserved, 
                 CreatedDate = DateTime.UtcNow, 
-                IsCreationEvent = false,
+                EventType = EventType.BookReservedEvent,
                 ProcessedDate = DateTime.UtcNow,
             };
 

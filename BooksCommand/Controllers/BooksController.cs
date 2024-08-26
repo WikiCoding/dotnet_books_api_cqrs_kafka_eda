@@ -59,5 +59,25 @@ namespace BooksCommand.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook([FromRoute(Name = "id")] Guid id)
+        {
+            try
+            {
+                var deleteBookCommand = new DeleteBook.DeleteBookCommand(id);
+
+                await _mediator.Send(deleteBookCommand);
+
+                return NoContent();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

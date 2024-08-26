@@ -1,6 +1,7 @@
 ﻿
 using BookApi.Command.Domain.DDD;
 using BooksCommand.Domain;
+using BooksCommand.Domain.ValueObjects;
 using BooksCommand.Persistence;
 
 namespace BookApi.Command.Persistence
@@ -9,5 +10,6 @@ namespace BookApi.Command.Persistence
     {
         Task<BookWriteDataModel?> FindBookById(Guid bookId);
         Task<BookOutBoxDataModel> ReserveBook(Book book, CancellationToken cancellationToken);
+        Task DeleteBook(BookId bookId, CancellationToken cancellationToken);
     }
 }

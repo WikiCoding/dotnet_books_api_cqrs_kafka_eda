@@ -37,8 +37,7 @@ namespace BooksCommand.Commands
 
                 Book book = _bookFactory.Create(bookId, bookTitle, bookIsReserved);
 
-                bool isUpdateEvent = true;
-                BookReservedEvent bookReservedEvent = new(bookDm.Id, bookDm.Title, bookDm.IsReserved, isUpdateEvent, DateTime.UtcNow);
+                BookReservedEvent bookReservedEvent = new(bookDm.Id, bookDm.Title, bookDm.IsReserved, EventType.BookReservedEvent, DateTime.UtcNow);
 
                 // enforcing business rules on the domain.
                 // The validation rules could be done directly here to simplify but I want to do it on the aggregate root this time for demo purposes.
@@ -47,6 +46,8 @@ namespace BooksCommand.Commands
                 bookDm.IsReserved = true;
 
                 BookOutBoxDataModel bookOutBoxDataModel = await _bookRepository.ReserveBook(book, cancellationToken);
+
+                book.RaiseClearEvents();
 
                 return bookOutBoxDataModel;
             }

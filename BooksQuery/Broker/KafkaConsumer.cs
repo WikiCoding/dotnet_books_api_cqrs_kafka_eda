@@ -57,29 +57,37 @@ namespace BooksQuery.Broker
 
             BookReadDataModel bookReadDataModel = JsonSerializer.Deserialize<BookReadDataModel>(message)!;
 
-            Book book = new() { Title = bookReadDataModel.Title, IsReserved = bookReadDataModel.IsReserved, EventId = bookReadDataModel.BookId };
+            Book book = new() { Title = bookReadDataModel.Title, IsReserved = bookReadDataModel.IsReserved, BookId = bookReadDataModel.BookId };
 
             using (var scope = _serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<BookReadDbContext>();
 
-                if (bookReadDataModel.IsCreationEvent)
+                if (bookReadDataModel.EventType == EventType.BookCreatedEvent)
                 {
                     dbContext!.Add(book);
                     await dbContext.SaveChangesAsync(stoppingToken);
                 }
-                else
+                else if (bookReadDataModel.EventType == EventType.BookReservedEvent)
                 {
-                    var bookToUpdate = await dbContext!.Books.Where(book => book.EventId == bookReadDataModel.BookId).FirstOrDefaultAsync();
+                    var bookToUpdate = await dbContext!.Books.Where(book => book.BookId == bookReadDataModel.BookId).FirstOrDefaultAsync();
 
-                    _logger.LogWarning("Book to Update: {bookToUpdate.EventId}", bookToUpdate.EventId);
+                    _logger.LogWarning("Book to Update: {bookToUpdate.EventId}", bookToUpdate.BookId);
                     _logger.LogWarning("Book to Update: {bookToUpdate.EventId}", bookReadDataModel.BookId);
 
                     bookToUpdate!.IsReserved = true;
 
                     int rowsAffected = await dbContext.SaveChangesAsync(stoppingToken);
 
-                    _logger.LogWarning("rows affected {rowsAffected}", rowsAffected );
+                    _logger.LogWarning("rows affected {rowsAffected}", rowsAffected);
+                }
+                else
+                {
+                    var bookToDelete = await dbContext!.Books.Where(book => book.BookId == bookReadDataModel.BookId).FirstOrDefaultAsync();
+
+                    dbContext.Books.Remove(bookToDelete!);
+
+                    await dbContext.SaveChangesAsync(stoppingToken);
                 }
             }
         }

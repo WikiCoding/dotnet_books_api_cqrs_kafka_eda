@@ -5,7 +5,6 @@ using BooksCommand.Domain.ValueObjects;
 using BooksCommand.Events;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
 
 namespace BooksCommand.Persistence
 {
@@ -33,7 +32,7 @@ namespace BooksCommand.Persistence
             { 
                 Title = writeDm.Title, 
                 IsReserved = writeDm.IsReserved, 
-                IsCreationEvent = true,
+                EventType = EventType.BookCreatedEvent,
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -42,7 +41,7 @@ namespace BooksCommand.Persistence
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            BookCreatedEvent createdBookEvent = new(writeDm.Id, writeDm.Title, writeDm.IsReserved, outboxDm.IsCreationEvent, DateTime.UtcNow);
+            BookCreatedEvent createdBookEvent = new(writeDm.Id, writeDm.Title, writeDm.IsReserved, outboxDm.EventType, DateTime.UtcNow);
 
             // I'll use the outbox pattern so no need to create this coupling here
             //await _publisher.Publish(createdBookEvent, cancellationToken);
@@ -57,7 +56,7 @@ namespace BooksCommand.Persistence
                 BookId = book.Id.Id,
                 Title = book.Title.Title,
                 IsReserved = true,
-                IsCreationEvent = false,
+                EventType = EventType.BookReservedEvent,
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -69,6 +68,29 @@ namespace BooksCommand.Persistence
             //await _publisher.Publish(bookReservedEvent, cancellationToken);
 
             return outboxDm;
+        }
+
+        public async Task DeleteBook(BookId bookId, CancellationToken cancellationToken)
+        {
+            BookWriteDataModel? bookDm = await FindBookById(bookId.Id);
+
+            if (bookDm == null) throw new ArgumentOutOfRangeException("book not found");
+
+            var outboxDm = new BookOutBoxDataModel() 
+            { 
+                BookId = bookDm.Id,
+                Title = bookDm.Title,
+                IsReserved = bookDm.IsReserved,
+                CreatedDate = DateTime.UtcNow,
+                EventType = EventType.BookDeletedEvent,
+
+            };
+
+            _dbContext.Remove(bookDm);
+
+            _dbContext.OutBoxModels.Add(outboxDm);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

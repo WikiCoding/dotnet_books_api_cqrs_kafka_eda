@@ -1,4 +1,6 @@
-﻿namespace BooksCommand.Events
+﻿using BooksCommand.Persistence;
+
+namespace BooksCommand.Events
 {
     public class BookCreatedEvent : IDomainEvent
     {
@@ -6,16 +8,16 @@
         public Guid BookId { get; }
         public string Title { get; } = string.Empty;
         public bool IsReserved { get; } = false;
-        public bool IsCreationEvent { get; } = true;
+        public EventType EventType { get; }
         public DateTime CreatedDate { get; }
         public DateTime? ProcessedDate { get; set; }
 
-        public BookCreatedEvent(Guid bookId, string title, bool isReserved, bool isCreationEvent, DateTime createdDate)
+        public BookCreatedEvent(Guid bookId, string title, bool isReserved, EventType eventType, DateTime createdDate)
         {
             BookId = bookId;
             Title = title;
             IsReserved = isReserved;
-            IsCreationEvent = isCreationEvent;
+            EventType = eventType;
             CreatedDate = createdDate;
         }
     }

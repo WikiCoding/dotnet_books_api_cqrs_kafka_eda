@@ -34,7 +34,7 @@ namespace BooksCommand.Migrations
                     BookId = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     IsReserved = table.Column<bool>(type: "boolean", nullable: false),
-                    IsCreationEvent = table.Column<bool>(type: "boolean", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ProcessedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

@@ -1,5 +1,6 @@
 ﻿using BooksCommand.Broker;
 using BooksCommand.Database;
+using BooksCommand.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
@@ -40,9 +41,14 @@ namespace BooksCommand.Outbox
                 foreach (var outboxEvent in outboxEventListToProcess)
                 {
                     // since the title is also unique: (this needs refactoring, like this is not ok...)
-                    var bookDm = await dbContext.Books.Where(book => book.Title == outboxEvent.Title).FirstAsync();
+                    if (outboxEvent.EventType != EventType.BookDeletedEvent)
+                    {
+                        var bookDm = await dbContext.Books.Where(book => book.Title == outboxEvent.Title).FirstAsync();
 
-                    outboxEvent.BookId = bookDm.Id;
+                        outboxEvent.BookId = bookDm.Id;
+
+                    }
+
                     outboxEvent.ProcessedDate = DateTime.UtcNow;
 
                     string bookSerialized = JsonSerializer.Serialize(outboxEvent);

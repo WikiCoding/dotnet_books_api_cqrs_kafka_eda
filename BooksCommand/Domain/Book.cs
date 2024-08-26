@@ -34,6 +34,11 @@ namespace BooksCommand.Domain
             _events.Add(domainEvent);
         }
 
+        public void RaiseBookDeletedEvent(BookDeletedEvent domainEvent)
+        {
+            _events.Remove(domainEvent);
+        }
+
         public void RaiseClearEvents()
         {
             _events.Clear();

@@ -21,7 +21,7 @@ namespace BooksQuery.Controllers
         {
             var books = await _mediator.Send(new GellAllBooksQuery.Query());
 
-            return Ok(books.ToList().ConvertAll(book => new BookResponse(book.Id.ToString(), book.Title, book.IsReserved)));
+            return Ok(books.ToList().ConvertAll(book => new BookResponse(book.BookId.ToString(), book.Title, book.IsReserved)));
         }
     }
 }

@@ -10,8 +10,8 @@ namespace BooksCommand.Persistence
         public Guid BookId { get; set; }
         [Required]
         public string Title { get; set; } = string.Empty;
-        public bool IsReserved { get; set; } = false;
-        public bool IsCreationEvent { get; set; } = true;
+        public bool IsReserved { get; set; } = true;
+        public EventType EventType { get; set; } // make enum or string
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? ProcessedDate { get; set; }
     }
