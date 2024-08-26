@@ -9,9 +9,10 @@ namespace BooksCommand.Domain
         {
             Book book = new(bookId, bookTitle, bookIsReserved);
 
-            BookCreatedEvent evnt = new(bookId.Id, bookTitle.Title, false, true, DateTime.UtcNow);
+            // Moving this logic to the Command Handler to avoid event duplication when building the aggregate for updates
+            //BookCreatedEvent evnt = new(bookId.Id, bookTitle.Title, false, true, DateTime.UtcNow);
 
-            book.RaiseBookCreatedEvent(evnt);
+            //book.RaiseBookCreatedEvent(evnt);
 
             return book;
         }

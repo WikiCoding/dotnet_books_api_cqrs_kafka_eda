@@ -28,7 +28,9 @@ namespace BooksCommand.Domain
 
         public void RaiseBookReservedEvent(BookReservedEvent domainEvent)
         {
-            // handle any business logic related with this Aggregate.
+            // handle any business logic related with this Aggregate. For example, here I'll check if the book was already reserved before
+            if (domainEvent.IsReserved) throw new ArgumentException("Book is already reserved");
+
             _events.Add(domainEvent);
         }
 

@@ -43,10 +43,20 @@ namespace BooksCommand.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> ReserveBook([FromRoute(Name = "id")] Guid id)
         {
-            var reserveBookCommand = new ReserveBook.ReserveBookCommand() { BookId = id };
-            var bookDm = await _mediator.Send(reserveBookCommand);
+            try
+            {
+                var reserveBookCommand = new ReserveBook.ReserveBookCommand() { BookId = id };
+                var bookOutboxDm = await _mediator.Send(reserveBookCommand);
 
-            return Ok(bookDm);
+                return Ok(bookOutboxDm);
+            }
+            catch (ArgumentException ex)
+            {
+                return Conflict(ex.Message);
+            } catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
     }

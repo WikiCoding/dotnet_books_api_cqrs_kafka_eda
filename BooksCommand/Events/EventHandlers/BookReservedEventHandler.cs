@@ -6,6 +6,7 @@ using System.Text.Json;
 
 namespace BooksCommand.Events.EventHandlers
 {
+    // This class is not being used at the moment since I'm using the outbox pattern but I want to keep it here as example
     public class BookReservedEventHandler : INotificationHandler<BookReservedEvent>
     {
         private readonly KafkaProducer _kafkaProducer;
