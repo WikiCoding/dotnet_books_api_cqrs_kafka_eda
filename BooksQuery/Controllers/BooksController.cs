@@ -17,11 +17,13 @@ namespace BooksQuery.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllBooks()
+        public async Task<IActionResult> GetAllBooks([FromQuery(Name = "page")] int page = 1, [FromQuery(Name = "pageSize")] int pageSize = 10)
         {
-            var books = await _mediator.Send(new GellAllBooksQuery.Query());
+            var books = await _mediator.Send(new GellAllBooksQuery.Query(page, pageSize));
 
-            return Ok(books.ToList().ConvertAll(book => new BookResponse(book.BookId.ToString(), book.Title, book.IsReserved)));
+            var booksResponse = books.ToList().ConvertAll(book => new BookResponse(book.BookId.ToString(), book.Title, book.IsReserved));
+
+            return Ok(new BookResponseWithPaging(booksResponse, new Paging(page, pageSize)));
         }
 
         [HttpGet("{id}")]

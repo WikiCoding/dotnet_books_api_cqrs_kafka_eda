@@ -7,10 +7,7 @@ namespace BooksQuery.Queries
 {
     public class GellAllBooksQuery
     {
-        public class Query : IRequest<IEnumerable<Book>>
-        {
-
-        }
+        public record Query(int page = 1, int pageSize = 10) : IRequest<IEnumerable<Book>>;
 
         public class QueryHandler : IRequestHandler<Query, IEnumerable<Book>>
         {
@@ -23,7 +20,16 @@ namespace BooksQuery.Queries
 
             public async Task<IEnumerable<Book>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _dbContext.Books.ToListAsync();
+                var dbQuery = _dbContext.Books.AsQueryable();
+
+                // paging
+                var skip = (request.page - 1) * request.pageSize;
+                var take = request.pageSize;
+
+                //var result = await dbQuery.Skip(skip).Take(take).ToListAsync(cancellationToken);
+
+                //return await _dbContext.Books.ToListAsync();
+                return await dbQuery.Skip(skip).Take(take).ToListAsync(cancellationToken); ;
             }
         }
     }
