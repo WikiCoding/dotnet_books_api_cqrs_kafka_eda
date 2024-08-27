@@ -1,6 +1,6 @@
 ﻿using BooksCommand.Domain.ValueObjects;
 
-namespace BooksCommand.Events
+namespace BooksCommand.Domain.Events
 {
     public record BookDeletedEvent(BookId BookId) : IDomainEvent;
 }

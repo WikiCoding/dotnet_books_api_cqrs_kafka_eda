@@ -1,5 +1,4 @@
 ﻿using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Events;
 
 namespace BooksCommand.Domain
 {

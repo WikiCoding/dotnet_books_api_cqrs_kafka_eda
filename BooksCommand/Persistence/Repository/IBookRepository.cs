@@ -1,10 +1,9 @@
-﻿
-using BookApi.Command.Domain.DDD;
+﻿using BookApi.Command.Domain.DDD;
 using BooksCommand.Domain;
 using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Persistence;
+using BooksCommand.Persistence.Datamodels;
 
-namespace BookApi.Command.Persistence
+namespace BooksCommand.Persistence.Repository
 {
     public interface IBookRepository : IRepository<Book, BookWriteDataModel>
     {

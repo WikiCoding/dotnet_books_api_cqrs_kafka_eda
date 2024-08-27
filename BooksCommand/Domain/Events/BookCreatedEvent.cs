@@ -1,17 +1,18 @@
-﻿using BooksCommand.Persistence;
+﻿using BooksCommand.Persistence.Datamodels;
 
-namespace BooksCommand.Events
+namespace BooksCommand.Domain.Events
 {
-    public class BookReservedEvent : IDomainEvent
+    public class BookCreatedEvent : IDomainEvent
     {
+        //public int StreamId { get; set; }
         public Guid BookId { get; }
         public string Title { get; } = string.Empty;
-        public bool IsReserved { get; } = true;
+        public bool IsReserved { get; } = false;
         public EventType EventType { get; }
         public DateTime CreatedDate { get; }
         public DateTime? ProcessedDate { get; set; }
 
-        public BookReservedEvent(Guid bookId, string title, bool isReserved, EventType eventType, DateTime createdDate)
+        public BookCreatedEvent(Guid bookId, string title, bool isReserved, EventType eventType, DateTime createdDate)
         {
             BookId = bookId;
             Title = title;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BooksCommand.Persistence
+namespace BooksCommand.Persistence.Datamodels
 {
     public class BookWriteDataModel
     {

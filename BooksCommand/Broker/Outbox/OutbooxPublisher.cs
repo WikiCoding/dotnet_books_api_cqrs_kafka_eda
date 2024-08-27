@@ -1,10 +1,10 @@
 ﻿using BooksCommand.Broker;
-using BooksCommand.Database;
-using BooksCommand.Persistence;
+using BooksCommand.Persistence.Context;
+using BooksCommand.Persistence.Datamodels;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
-namespace BooksCommand.Outbox
+namespace BooksCommand.Broker.Outbox
 {
     public class OutbooxPublisher : BackgroundService
     {

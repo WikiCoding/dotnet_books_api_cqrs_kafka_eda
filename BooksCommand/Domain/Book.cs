@@ -1,6 +1,6 @@
 ﻿using BooksCommand.Domain.DDD;
+using BooksCommand.Domain.Events;
 using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Events;
 
 namespace BooksCommand.Domain
 {

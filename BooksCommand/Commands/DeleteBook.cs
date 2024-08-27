@@ -1,8 +1,8 @@
-﻿using BookApi.Command.Persistence;
-using BooksCommand.Domain;
+﻿using BooksCommand.Domain;
+using BooksCommand.Domain.Events;
 using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Events;
-using BooksCommand.Persistence;
+using BooksCommand.Persistence.Datamodels;
+using BooksCommand.Persistence.Repository;
 using MediatR;
 
 namespace BooksCommand.Commands

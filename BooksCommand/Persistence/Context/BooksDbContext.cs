@@ -1,7 +1,7 @@
-﻿using BooksCommand.Persistence;
+﻿using BooksCommand.Persistence.Datamodels;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksCommand.Database
+namespace BooksCommand.Persistence.Context
 {
     public class BooksDbContext(DbContextOptions<BooksDbContext> options) : DbContext(options)
     {

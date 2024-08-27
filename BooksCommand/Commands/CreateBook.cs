@@ -1,9 +1,9 @@
-﻿using BookApi.Command.Persistence;
-using BooksCommand.Broker;
+﻿using BooksCommand.Broker;
 using BooksCommand.Domain;
+using BooksCommand.Domain.Events;
 using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Events;
-using BooksCommand.Persistence;
+using BooksCommand.Persistence.Datamodels;
+using BooksCommand.Persistence.Repository;
 using Confluent.Kafka;
 using MediatR;
 using System.Text.Json;

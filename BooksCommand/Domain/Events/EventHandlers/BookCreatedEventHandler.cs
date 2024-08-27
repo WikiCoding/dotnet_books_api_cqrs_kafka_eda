@@ -1,10 +1,11 @@
 ﻿using BooksCommand.Broker;
-using BooksCommand.Database;
-using BooksCommand.Persistence;
+using BooksCommand.Domain.Events;
+using BooksCommand.Persistence.Context;
+using BooksCommand.Persistence.Datamodels;
 using MediatR;
 using System.Text.Json;
 
-namespace BooksCommand.Events.EventHandlers
+namespace BooksCommand.Domain.Events.EventHandlers
 {
     // This class is not being used at the moment since I'm using the outbox pattern but I want to keep it here as example
     public class BookCreatedEventHandler : INotificationHandler<BookCreatedEvent>

@@ -1,4 +1,4 @@
-﻿using BooksCommand.Events;
+﻿using BooksCommand.Domain.Events;
 
 namespace BooksCommand.Domain.DDD
 {

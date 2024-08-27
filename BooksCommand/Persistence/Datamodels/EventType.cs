@@ -1,4 +1,4 @@
-﻿namespace BooksCommand.Persistence
+﻿namespace BooksCommand.Persistence.Datamodels
 {
     public enum EventType
     {

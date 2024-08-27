@@ -1,12 +1,12 @@
-﻿using BookApi.Command.Persistence;
-using BooksCommand.Database;
-using BooksCommand.Domain;
+﻿using BooksCommand.Domain;
+using BooksCommand.Domain.Events;
 using BooksCommand.Domain.ValueObjects;
-using BooksCommand.Events;
+using BooksCommand.Persistence.Context;
+using BooksCommand.Persistence.Datamodels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksCommand.Persistence
+namespace BooksCommand.Persistence.Repository
 {
     public class BookRepositoryImpl : IBookRepository
     {
@@ -26,12 +26,13 @@ namespace BooksCommand.Persistence
 
         public async Task<BookWriteDataModel> SaveBook(Book aggregateRoot, CancellationToken cancellationToken)
         {
-            BookWriteDataModel writeDm = new() { Title = aggregateRoot.Title.Title, IsReserved = false };
+            BookWriteDataModel writeDm = new() { Id = aggregateRoot.Id.Id, Title = aggregateRoot.Title.Title, IsReserved = false };
 
-            BookOutBoxDataModel outboxDm = new() 
-            { 
-                Title = writeDm.Title, 
-                IsReserved = writeDm.IsReserved, 
+            BookOutBoxDataModel outboxDm = new()
+            {
+                BookId = writeDm.Id,
+                Title = writeDm.Title,
+                IsReserved = writeDm.IsReserved,
                 EventType = EventType.BookCreatedEvent,
                 CreatedDate = DateTime.UtcNow
             };
@@ -50,7 +51,7 @@ namespace BooksCommand.Persistence
         }
 
         public async Task<BookOutBoxDataModel> ReserveBook(Book book, CancellationToken cancellationToken)
-        {            
+        {
             BookOutBoxDataModel outboxDm = new()
             {
                 BookId = book.Id.Id,
@@ -76,8 +77,8 @@ namespace BooksCommand.Persistence
 
             if (bookDm == null) throw new ArgumentOutOfRangeException("book not found");
 
-            var outboxDm = new BookOutBoxDataModel() 
-            { 
+            var outboxDm = new BookOutBoxDataModel()
+            {
                 BookId = bookDm.Id,
                 Title = bookDm.Title,
                 IsReserved = bookDm.IsReserved,

@@ -23,5 +23,26 @@ namespace BooksQuery.Controllers
 
             return Ok(books.ToList().ConvertAll(book => new BookResponse(book.BookId.ToString(), book.Title, book.IsReserved)));
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBookById([FromRoute(Name = "id")] string id)
+        {
+            var query = new GetBookByIdQuery.Query(id);
+
+            try
+            {
+                var book = await _mediator.Send(query);
+
+                return Ok(book);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

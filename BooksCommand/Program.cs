@@ -1,9 +1,8 @@
-using BookApi.Command.Persistence;
 using BooksCommand.Broker;
-using BooksCommand.Database;
+using BooksCommand.Broker.Outbox;
 using BooksCommand.Domain;
-using BooksCommand.Outbox;
-using BooksCommand.Persistence;
+using BooksCommand.Persistence.Context;
+using BooksCommand.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
