@@ -1,11 +1,10 @@
-﻿
-using BooksQuery.Database;
+﻿using BooksQuery.Database;
 using BooksQuery.Models;
 using Confluent.Kafka;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
-namespace BooksQuery.Broker
+namespace BooksQuery.Infrastructure.Broker
 {
     public class KafkaConsumer : BackgroundService
     {

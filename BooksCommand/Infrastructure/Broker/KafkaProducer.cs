@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 
-namespace BooksCommand.Broker
+namespace BooksCommand.Infrastructure.Broker
 {
     public class KafkaProducer
     {

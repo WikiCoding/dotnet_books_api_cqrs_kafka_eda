@@ -5,7 +5,7 @@ using BooksCommand.Persistence.Datamodels;
 using BooksCommand.Persistence.Repository;
 using MediatR;
 
-namespace BooksCommand.Commands
+namespace BooksCommand.Application.Commands
 {
     public class ReserveBook
     {
@@ -25,7 +25,7 @@ namespace BooksCommand.Commands
                 _bookFactory = bookFactory;
             }
 
-            public async Task<BookOutBoxDataModel> Handle(ReserveBookCommand request, CancellationToken cancellationToken) 
+            public async Task<BookOutBoxDataModel> Handle(ReserveBookCommand request, CancellationToken cancellationToken)
             {
                 // here I should build the aggregate root, raise the proper domain event and then continue the logic as at CreateBook
                 BookWriteDataModel? bookDm = await _bookRepository.FindBookById(request.BookId);

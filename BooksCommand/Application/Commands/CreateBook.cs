@@ -1,14 +1,11 @@
-﻿using BooksCommand.Broker;
-using BooksCommand.Domain;
+﻿using BooksCommand.Domain;
 using BooksCommand.Domain.Events;
 using BooksCommand.Domain.ValueObjects;
 using BooksCommand.Persistence.Datamodels;
 using BooksCommand.Persistence.Repository;
-using Confluent.Kafka;
 using MediatR;
-using System.Text.Json;
 
-namespace BooksCommand.Commands
+namespace BooksCommand.Application.Commands
 {
     public class CreateBook
     {

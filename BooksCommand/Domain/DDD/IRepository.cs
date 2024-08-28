@@ -1,4 +1,4 @@
-﻿namespace BookApi.Command.Domain.DDD
+﻿namespace BooksCommand.Domain.DDD
 {
     public interface IRepository<T, K>
     {

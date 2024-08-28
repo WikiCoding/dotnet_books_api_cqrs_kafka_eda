@@ -1,8 +1,8 @@
-﻿using BooksCommand.Commands;
+﻿using BooksCommand.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static BooksCommand.Commands.CreateBook;
+using static BooksCommand.Application.Commands.CreateBook;
 
 namespace BooksCommand.Controllers
 {

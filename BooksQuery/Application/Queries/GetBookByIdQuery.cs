@@ -4,7 +4,7 @@ using BooksQuery.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksQuery.Queries
+namespace BooksQuery.Application.Queries
 {
     public class GetBookByIdQuery
     {

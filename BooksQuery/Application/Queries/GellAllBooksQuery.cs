@@ -3,7 +3,7 @@ using BooksQuery.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksQuery.Queries
+namespace BooksQuery.Application.Queries
 {
     public class GellAllBooksQuery
     {

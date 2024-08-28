@@ -1,5 +1,5 @@
-using BooksQuery.Broker;
 using BooksQuery.Database;
+using BooksQuery.Infrastructure.Broker;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

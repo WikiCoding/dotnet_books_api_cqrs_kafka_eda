@@ -5,7 +5,7 @@ using BooksCommand.Persistence.Datamodels;
 using BooksCommand.Persistence.Repository;
 using MediatR;
 
-namespace BooksCommand.Commands
+namespace BooksCommand.Application.Commands
 {
     public class DeleteBook
     {
@@ -33,7 +33,7 @@ namespace BooksCommand.Commands
                 Book book = _bookFactory.Create(bookId, new BookTitle(bookDm.Title), new BookIsReserved() { IsReserved = bookDm.IsReserved });
 
                 book.RaiseBookDeletedEvent(new BookDeletedEvent(bookId));
-                
+
                 await _bookRepository.DeleteBook(bookId, cancellationToken);
 
                 book.RaiseClearEvents();

@@ -1,6 +1,6 @@
-using BooksCommand.Broker;
-using BooksCommand.Broker.Outbox;
 using BooksCommand.Domain;
+using BooksCommand.Infrastructure.Broker;
+using BooksCommand.Infrastructure.Broker.Outbox;
 using BooksCommand.Persistence.Context;
 using BooksCommand.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;

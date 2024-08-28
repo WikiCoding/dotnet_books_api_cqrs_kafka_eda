@@ -1,5 +1,5 @@
-﻿using BookApi.Command.Domain.DDD;
-using BooksCommand.Domain;
+﻿using BooksCommand.Domain;
+using BooksCommand.Domain.DDD;
 using BooksCommand.Domain.ValueObjects;
 using BooksCommand.Persistence.Datamodels;
 

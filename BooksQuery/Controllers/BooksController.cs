@@ -1,5 +1,5 @@
-﻿using BooksQuery.Contracts;
-using BooksQuery.Queries;
+﻿using BooksQuery.Application.Queries;
+using BooksQuery.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

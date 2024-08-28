@@ -1,4 +1,5 @@
-﻿using BooksCommand.Broker;
+﻿using BooksCommand.Domain.Events;
+using BooksCommand.Infrastructure.Broker;
 using BooksCommand.Persistence.Context;
 using BooksCommand.Persistence.Datamodels;
 using MediatR;
