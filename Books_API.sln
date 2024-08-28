@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksCommand", "BooksCommand\BooksCommand.csproj", "{D61AF171-8786-4FAE-A03F-E406E1C5FAC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksCommand", "BooksCommand\BooksCommand.csproj", "{D61AF171-8786-4FAE-A03F-E406E1C5FAC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksQuery", "BooksQuery\BooksQuery.csproj", "{CA2BC6B9-E915-4E77-8E1E-4F8D64CDA535}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksQuery", "BooksQuery\BooksQuery.csproj", "{CA2BC6B9-E915-4E77-8E1E-4F8D64CDA535}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9CDE3781-6687-43B9-98C9-F6B9C90635A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CA2BC6B9-E915-4E77-8E1E-4F8D64CDA535}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA2BC6B9-E915-4E77-8E1E-4F8D64CDA535}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA2BC6B9-E915-4E77-8E1E-4F8D64CDA535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDE3781-6687-43B9-98C9-F6B9C90635A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDE3781-6687-43B9-98C9-F6B9C90635A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDE3781-6687-43B9-98C9-F6B9C90635A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDE3781-6687-43B9-98C9-F6B9C90635A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

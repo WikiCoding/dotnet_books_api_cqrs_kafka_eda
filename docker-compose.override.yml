@@ -1,0 +1,15 @@
+services:
+  bookscommand:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=9080
+    ports:
+      - "9080"
+
+  booksquery:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=9081
+    ports:
+      - "9081"
+

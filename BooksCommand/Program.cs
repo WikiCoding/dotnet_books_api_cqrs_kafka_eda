@@ -4,6 +4,8 @@ using BooksCommand.Infrastructure.Broker.Outbox;
 using BooksCommand.Persistence.Context;
 using BooksCommand.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddServiceDiscovery(options => options.UseConsul());
 
 var app = builder.Build();
 
@@ -39,9 +43,10 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<BooksDbContext>();
     if (app.Environment.IsDevelopment())
     {
+        dbContext.Database.Migrate();
         // auto database create-drop
-        dbContext.Database.EnsureDeleted();
-        dbContext.Database.EnsureCreated();
+        //dbContext.Database.EnsureDeleted();
+        //dbContext.Database.EnsureCreated();
     }
 }
 

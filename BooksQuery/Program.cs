@@ -1,6 +1,8 @@
 using BooksQuery.Database;
 using BooksQuery.Infrastructure.Broker;
 using Microsoft.EntityFrameworkCore;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Consul;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddHostedService<KafkaConsumer>();
 builder.Services.AddDbContext<BookReadDbContext>(options => options.UseMongoDB(builder.Configuration.GetConnectionString("books-query-db")!, "books_query_db"));
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddServiceDiscovery(options => options.UseConsul());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
