@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "bookscommand": "StartDebugging",
-        "booksquery": "StartDebugging"
+        "booksquery": "StartDebugging",
+        "gateway": "StartDebugging"
       }
     }
   }
